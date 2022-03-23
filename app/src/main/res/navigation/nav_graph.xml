@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.example.opbligatoriskopgaveapp.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SecondFragment"
+        android:name="com.example.opbligatoriskopgaveapp.SecondFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/AddFragment"
+        android:name="com.example.opbligatoriskopgaveapp.AddFragment"
+        tools:layout="@layout/fragment_add">
+    </fragment>
+
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.example.opbligatoriskopgaveapp.ItemFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" >
+        <action
+            android:id="@+id/action_itemFragment_to_itemDetail"
+            app:destination="@id/itemDetail" />
+        <action
+            android:id="@+id/action_itemFragment_to_AddFragment"
+            app:destination="@id/AddFragment" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_itemFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetail"
+        android:name="com.example.opbligatoriskopgaveapp.ItemDetail"
+        android:label="fragment_item_detail"
+        tools:layout="@layout/fragment_item_detail">
+        <action
+            android:id="@+id/action_itemDetail_to_updateItem"
+            app:destination="@id/updateItem" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/updateItem"
+        android:name="com.example.opbligatoriskopgaveapp.UpdateItem"
+        android:label="fragment_update_item"
+        tools:layout="@layout/fragment_update_item" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.opbligatoriskopgaveapp.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/popUpWindow"
+        android:name="com.example.opbligatoriskopgaveapp.PopUpWindow"
+        android:label="fragment_pop_up_window"
+        tools:layout="@layout/fragment_pop_up_window" />
+</navigation>
