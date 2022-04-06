@@ -9,7 +9,7 @@ data class Item(val id: Int, val title: String, val price: Int, val description:
         date: Int
     ) : this(-1, title, price, description, seller, date)
 
-    override fun toString(): String {
+   override fun toString(): String {
         return "$id $title $price $description $seller $date"
     }
 }

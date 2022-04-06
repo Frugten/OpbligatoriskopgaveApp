@@ -49,10 +49,7 @@ class ItemDetail : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        itemsViewModel.reload()
-
         val currentUser = auth.currentUser
-
 
         val bundle = requireArguments()
         val itemDetailArgs: ItemDetailArgs = ItemDetailArgs.fromBundle(bundle)
@@ -70,7 +67,7 @@ class ItemDetail : Fragment() {
 
 
         val format = SimpleDateFormat.getDateTimeInstance()
-        val str = format.format(item.date * 1000)
+        val str = format.format(item.date*1000L)
         binding.textviewDate.text = str.toString()
 
         /*private fun showDialog() {
@@ -96,7 +93,7 @@ class ItemDetail : Fragment() {
                 itemsViewModel.delete(item.id)
                 findNavController().popBackStack()
         }
-            binding.buttonDelete.visibility = View.INVISIBLE
+            binding.buttonDelete.visibility = View.GONE
 
         }
 

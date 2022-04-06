@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.opbligatoriskopgaveapp.databinding.FragmentItemListBinding
 import com.example.opbligatoriskopgaveapp.models.ItemsAdapterData
 import com.example.opbligatoriskopgaveapp.models.ItemsViewModelData
@@ -46,12 +47,14 @@ class ItemFragment : Fragment() {
 
         itemsviewModel.reload()
 
+
         itemsviewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
             //Log.d("APPLE", "observer $books")
             //binding.progressbar.visibility = View.GONE
             binding.recyclerview.visibility = if (items == null) View.GONE else View.VISIBLE
             if (items != null) {
                 val adapter = ItemsAdapterData(items) { position ->
+                    val sellsItemId = items[position].id
                     val action = ItemFragmentDirections.actionItemFragmentToItemDetail(position)
                     findNavController().navigate(action /*R.id.action_FirstFragment_to_SecondFragment*/)
                 }
@@ -61,44 +64,25 @@ class ItemFragment : Fragment() {
             }
         }
 
-        fun filtered(min: Int, max: Int) {
-
-            itemsviewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
-                //Log.d("APPLE", "observer $books")
-                //binding.progressbar.visibility = View.GONE
-                binding.recyclerview.visibility = if (items == null) View.GONE else View.VISIBLE
-                if (items != null) {
-                    val adapter = ItemsAdapterData(items.filter { i -> i.price > min && i.price < max }) { position ->
-                        val action =
-                            ItemFragmentDirections.actionItemFragmentToItemDetail(position)
-                        findNavController().navigate(action /*R.id.action_FirstFragment_to_SecondFragment*/)
-                    }
-
-                    binding.recyclerview.layoutManager = LinearLayoutManager(activity)
-                    binding.recyclerview.adapter = adapter
-                }
-            }
-        }
-
         fun filterDialog() {
-            val builder = AlertDialog.Builder(getActivity())
+            val builder = AlertDialog.Builder(activity)
             // set title
             builder.setTitle("Filter")
 
-            val layout = LinearLayout(getActivity())
+            val layout = LinearLayout(activity)
             layout.orientation = LinearLayout.VERTICAL
 
             //set content area
             builder.setMessage("Filter the price")
-            val input = EditText(getActivity())
-            val input1 = EditText(getActivity())
+            val input = EditText(activity)
+            val input1 = EditText(activity)
 
             input.setHint("Enter min")
             input.inputType = InputType.TYPE_CLASS_NUMBER
             layout.addView(input)
 
             input1.setHint("Enter max")
-            input1.inputType
+            input1.inputType = InputType.TYPE_CLASS_NUMBER
             layout.addView(input1)
 
             builder.setView(layout)
@@ -108,8 +92,8 @@ class ItemFragment : Fragment() {
                 "Update Now"
             ) { dialog, id ->
 
-                val strmin = input.text.toString().toString().trim()
-                val strmax = input1.text.toString().toString().trim()
+                val strmin = input.text.toString().trim()
+                val strmax = input1.text.toString().trim()
 
                 when {
                     strmin.isEmpty() ->
@@ -124,16 +108,16 @@ class ItemFragment : Fragment() {
                         if (min < max) {
 
                             Toast.makeText(
-                                getActivity(),
+                                activity,
                                 "min is {$min} and max is {$max}",
                                 Toast.LENGTH_SHORT
                             ).show()
 
-                            filtered(min, max)
+                            itemsviewModel.FilterPriceASC(min, max)
                         }else
                         {
                             Toast.makeText(
-                                getActivity(),
+                                activity,
                                 "min må ikke være større end max",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -168,7 +152,9 @@ class ItemFragment : Fragment() {
             onAddButtonClicket()
         }
             binding.sortbydate.setOnClickListener {
-                itemsviewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
+                itemsviewModel.SortDateASC()
+
+                /*itemsviewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
                     //Log.d("APPLE", "observer $books")
                     //binding.progressbar.visibility = View.GONE
                     binding.recyclerview.visibility = if (items == null) View.GONE else View.VISIBLE
@@ -176,18 +162,20 @@ class ItemFragment : Fragment() {
                         val adapter = ItemsAdapterData(items.sortedBy { i -> i.date }) { position ->
                             val action =
                                 ItemFragmentDirections.actionItemFragmentToItemDetail(position)
-                            findNavController().navigate(action /*R.id.action_FirstFragment_to_SecondFragment*/)
+                            findNavController().navigate(action)
                         }
 
                         binding.recyclerview.layoutManager = LinearLayoutManager(activity)
                         binding.recyclerview.adapter = adapter
                     }
-                }
+                }*/
             }
 
             binding.sortbyprice.setOnClickListener {
 
-                itemsviewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
+                itemsviewModel.SortPriceASC()
+
+               /* itemsviewModel.itemsLiveData.observe(viewLifecycleOwner) { items ->
                     //Log.d("APPLE", "observer $books")
                     //binding.progressbar.visibility = View.GONE
                     binding.recyclerview.visibility = if (items == null) View.GONE else View.VISIBLE
@@ -196,13 +184,13 @@ class ItemFragment : Fragment() {
                             ItemsAdapterData(items.sortedBy { i -> i.price }) { position ->
                                 val action =
                                     ItemFragmentDirections.actionItemFragmentToItemDetail(position)
-                                findNavController().navigate(action /*R.id.action_FirstFragment_to_SecondFragment*/)
+                                findNavController().navigate(action)
                             }
 
                         binding.recyclerview.layoutManager = LinearLayoutManager(activity)
                         binding.recyclerview.adapter = adapter
                     }
-                }
+                }*/
 
             }
 
@@ -265,3 +253,6 @@ class ItemFragment : Fragment() {
             _binding = null
         }
 }
+
+
+

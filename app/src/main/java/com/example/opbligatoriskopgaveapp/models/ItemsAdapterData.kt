@@ -3,9 +3,12 @@ package com.example.opbligatoriskopgaveapp.models
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.opbligatoriskopgaveapp.Item
+import com.example.opbligatoriskopgaveapp.ItemFragment
 import com.example.opbligatoriskopgaveapp.R
 
 
@@ -49,4 +52,5 @@ class ItemsAdapterData<T>(
             onItemClicked(position)
         }
     }
+
 }

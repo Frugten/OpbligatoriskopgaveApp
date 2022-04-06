@@ -59,7 +59,11 @@ class AddFragment : Fragment() {
                 Snackbar.make(binding.root, "No price", Snackbar.LENGTH_LONG).show()
             }
             // https://firebase.google.com/docs/auth/android/password-auth
-            val item = Item(title, priceStr.toInt(), description, seller, date.toInt())
+            val item = Item(title,
+                priceStr.toInt(),
+                description,
+                seller,
+                date.toInt())
             Log.d("APPLE", "elementer Id: $id price: $priceStr, description: $description, seller: $seller, date: $date")
 
             Log.d("APPLE", "add $item")
